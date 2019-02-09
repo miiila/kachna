@@ -1,0 +1,26 @@
+{% if posts %}
+    {% for post in posts %}
+        Od: {{ post.author_name }} &lt;{{ post.author_email }}&gt; </br>
+        Kdy: {{ post.timestamp }}</br>
+        Text: {{ post.text }}</br>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>Ještě nikdo nic nenapsal.</p>
+{% endif %}
+
+<h3>{{ question.question_text }}</h3>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'guestbook:add' %}" method="post">
+    {% csrf_token %}
+    {% if not user %}
+        <label for="author_name">Jméno:</label>
+        <input type="text" name="author_name" id="author_name"></br>
+        <label for="author_email">Email:</label>
+        <input type="text" name="author_email" id="author_email"></br>
+    {% endif %}
+    <textarea cols="50" rows="20" name="text" id="text"></textarea></br>
+    <input type="submit" value="Uložit">
+</form>
